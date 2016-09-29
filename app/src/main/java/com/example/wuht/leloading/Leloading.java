@@ -25,8 +25,7 @@ public class Leloading extends View {
             mDefaultPaint = new Paint();
     private int mWidth, mHeight;
     private ValueAnimator mValueAnimator;
-    private float alpha, beta, radius;
-    private PathMeasure mPathMeasure;
+    private float alpha,radius;
     private ArrayList<PointF> mPointFs;
     private boolean isRomote = false;
     private float mProcess;
@@ -55,13 +54,13 @@ public class Leloading extends View {
         float delta = 100;
         RectF rectF = new RectF(-0.5f * delta, -0.5f * delta, 0.5f * delta, 0.5f * delta);
         path.addArc(rectF, -90, 359.99f);
-        mPathMeasure = new PathMeasure(path, false);
+        PathMeasure pathMeasure = new PathMeasure(path, false);
 
-        beta = mPathMeasure.getLength() / 6f;
+        float beta = pathMeasure.getLength() / 6f;
         mPointFs = new ArrayList<>();
         for (int i = 0; i < 6; i++) {
             float[] temp = new float[2];
-            mPathMeasure.getPosTan(beta * i, temp, null);
+            pathMeasure.getPosTan(beta * i, temp, null);
             PointF pointF = new PointF(temp[0], temp[1]);
             mPointFs.add(pointF);
         }
@@ -83,10 +82,10 @@ public class Leloading extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        canvas.translate(mHeight / 2, mHeight / 2);
+        canvas.translate(mWidth / 2, mHeight / 2);
 
         if (!isRomote) {
-            int num = (int) (alpha *6);
+            int num = (int) (alpha * 6);
             switch (num) {
                 default:
                 case 5:
